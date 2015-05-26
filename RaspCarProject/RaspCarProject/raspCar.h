@@ -55,6 +55,9 @@ extern Mat temp2;
 extern Mat drawing;
 extern Mat ROI;
 extern Mat showFrontNumber;
+extern Mat frame;
+extern Mat yuv;
+
 extern double hu[7];
 extern double hu0;
 extern double hu1;

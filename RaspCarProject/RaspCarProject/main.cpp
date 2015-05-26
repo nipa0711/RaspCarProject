@@ -5,7 +5,7 @@ int main() //int argc, char** argv
 	//clock_t start_time, end_time;
 	VideoCapture capture;
 	//capture.open(0); //capture the video from webcam
-	capture.open("res/test12.mp4");
+	capture.open("res/test11.mp4");
 
 	if (!capture.isOpened())  // if not success, exit program
 	{
@@ -13,24 +13,19 @@ int main() //int argc, char** argv
 		return -1;
 	}
 
-
 	//VideoCapture capture(cap);
-	Mat frame;
-
+	
 	for (int i = 0; i < 10; i++)
 	{
 		curOrder[i] = 0;
 	}
-
+	
 	while (true)
 	{
 		//start_time = clock();
 		capture >> frame;
 		videoWidth = frame.cols;
 		videoHeight = frame.rows;
-
-		Mat channel[3];
-		Mat yuv;
 
 		if (!frame.empty())
 		{

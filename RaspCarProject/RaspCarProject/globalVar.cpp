@@ -21,6 +21,8 @@ Mat temp2;
 Mat drawing;
 Mat ROI;
 Mat showFrontNumber;
+Mat frame;
+Mat yuv;
 double hu[7];
 double hu0;
 double hu1;

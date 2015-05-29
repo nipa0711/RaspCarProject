@@ -9,7 +9,7 @@ Mat printInformOnVideo(Mat res)
 
 	//printf("%d\n", frameCount);
 
-	if (frameCount > 0)
+	if (frameCount>0 && ROI.cols>130) 
 	{
 		switch (curStat)
 		{
@@ -19,9 +19,12 @@ Mat printInformOnVideo(Mat res)
 			frameCount--;
 			break;
 		case RIGHT:
-			cvPutText(&printImg, "Turn Right", cvPoint(videoWidth / 3, videoHeight - 50), font, CV_RGB(255, 0, 0));
-			res = cvarrToMat(&printImg);
-			frameCount--;
+			if (ROI.cols>200)
+			{
+				cvPutText(&printImg, "Turn Right", cvPoint(videoWidth / 3, videoHeight - 50), font, CV_RGB(255, 0, 0));
+				res = cvarrToMat(&printImg);
+				frameCount--;
+			}
 			break;
 		case UTURN:
 			cvPutText(&printImg, "U-Turn", cvPoint(videoWidth / 3, videoHeight - 50), font, CV_RGB(255, 0, 0));
@@ -49,7 +52,7 @@ Mat printInformOnVideo(Mat res)
 			frameCount--;
 			break;
 		}
-	}
-
+	}	
+	
 	return res;
 }

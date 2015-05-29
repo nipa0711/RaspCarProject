@@ -37,15 +37,21 @@ extern int curOrder[10];
 extern int frameCount;
 extern int videoWidth;
 extern int videoHeight;
+extern int totalVideoPixels;
 extern int ingStat;
-
+extern int speedSign;
+extern int trafficSign;
+extern int largest_area;
+extern int largest_contour_index;
 extern int largestIndex;
 extern int largestContour;
 extern int secondLargestIndex;
 extern int secondLargestContour;
 
-extern const int framePerSec;
-extern const int showSec;
+extern const int framePerSec; // fps 초당프레임
+extern const int showSec; // 몇초간 보여줄지
+extern const int LimitColsSize;
+extern const int LimitRowsSize;
 
 extern Mat show;
 extern Mat cropedImage;
@@ -55,8 +61,8 @@ extern Mat temp2;
 extern Mat drawing;
 extern Mat ROI;
 extern Mat showFrontNumber;
-extern Mat frame;
 extern Mat yuv;
+extern Mat frontNumber;
 
 extern double hu[7];
 extern double hu0;

@@ -11,8 +11,8 @@ int main()
 {
 	// Run on the Windows
 	VideoCapture capture;
-	//capture.open(0); //capture the video from webcam
-	capture.open("res/test11.mp4"); // playing video
+	capture.open(0); //capture the video from webcam
+	//capture.open("res/test11.mp4"); // playing video
 	//capture.open("http://192.168.0.36:8080/video?x.mjpeg"); // IP camera
 
 	if (!capture.isOpened())  // if not success, exit program

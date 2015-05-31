@@ -155,7 +155,7 @@ Mat SpeedSign(Mat res, Mat yuv)
 					curOrder[5] = limit40;
 				}
 			}
-			else if ((hu0 >= 450 && hu0 < 590) && (hu1 >= 60 && hu1<79) && (hu2>1.5 && hu2 < 8))
+			else if ((hu0 >= 450 && hu0 < 650) && (hu1 >= 80 && hu1<180) && (hu2>0.3 && hu2 < 5))
 			{
 				curOrder[4] = 0;
 				curOrder[5] = 0;

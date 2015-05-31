@@ -1,16 +1,20 @@
 #include "raspCar.h"
 
+/*
+* Graduation Project
+* Made by Nipa
+* nipa0711@gmail.com
+* http://www.nipa0711.net/2015/03/OpenCV-Graduation-project-autonomous-car.html
+*/
+
 Mat SpeedSign(Mat res, Mat yuv)
 {
 	try
 	{
-		vector<vector<Point> > contours;
 		largest_area = 0;
 
 		split(yuv, channel);
 		threshold(channel[2], channel[2], 140, 255, CV_THRESH_TOZERO);
-
-		vector<Vec4i> hierarchy;
 
 		largest_contour_index = 0;
 
@@ -31,21 +35,16 @@ Mat SpeedSign(Mat res, Mat yuv)
 			}
 		}
 
-		Scalar color(255, 255, 255);  // color of the contour in the
-		//Draw the contour and rectangle
+		Scalar color(255, 255, 255);
 		drawContours(yuv, contours, largest_contour_index, color, CV_FILLED, 8, hierarchy);
 
 		rectangle(res, bounding_rect, Scalar(0, 255, 0), 2, 8, 0); // error
-
-		Mat temp3[3];
-		Mat ROI_Black;
-
+		
 		cvtColor(ROI, ROI_Black, CV_RGB2HLS);
 
 		split(ROI_Black, temp3);
 
 		threshold(temp3[1], temp3[1], 50, 255, CV_THRESH_BINARY_INV);
-		//Canny(temp[1], temp[1], 50, 150, 3);	
 
 		erode(temp3[1], temp3[1], Mat(Size(3, 3), CV_8UC1));
 		erode(temp3[1], temp3[1], Mat(Size(3, 3), CV_8UC1));
@@ -55,13 +54,11 @@ Mat SpeedSign(Mat res, Mat yuv)
 		dilate(temp3[1], temp3[1], Mat(Size(3, 3), CV_8UC1));
 		dilate(temp3[1], temp3[1], Mat(Size(3, 3), CV_8UC1));
 
-		frontNumber;
 		temp3[1].copyTo(frontNumber);
 
 		vector<vector<Point> > contours_poly(contours.size());
 		vector<Rect> boundRect(contours.size());
 
-		//adaptiveThreshold(temp[2], temp[2], 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, 3, 5);
 		findContours(temp3[1], contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
 
 		largestIndex = 0;
@@ -84,9 +81,6 @@ Mat SpeedSign(Mat res, Mat yuv)
 		}
 		drawing = Mat::zeros(ROI.size(), CV_8U);
 
-		// From the example you posted, you already know how to compute the contours
-		// so let's take just the first one and compute the moments
-
 		drawContours(drawing, contours, largestIndex, color, CV_FILLED, 8);
 		drawContours(drawing, contours, secondLargestIndex, color, CV_FILLED, 8);
 
@@ -100,7 +94,7 @@ Mat SpeedSign(Mat res, Mat yuv)
 		}
 
 		frontNumber(Rect(0, 0, frontNumber.cols / 2, frontNumber.rows)).copyTo(cropedImage);
-		drawContours(cropedImage, contours, -1, color, CV_FILLED, 8); // Assertion Failed Error largestIndex
+		drawContours(cropedImage, contours, -1, color, CV_FILLED, 8);
 		findContours(cropedImage, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
 
 		for (int i = 0; i < contours.size(); i++)
@@ -114,7 +108,7 @@ Mat SpeedSign(Mat res, Mat yuv)
 			showFrontNumber = frontNumber(boundRect[i]);
 		}
 
-		if ((contours.size()>0) && (ROI.rows > LimitRowsSize || ROI.cols > LimitColsSize))
+		if (contours.size()>0)
 		{
 			Moments mom = moments(contours[0]);
 			HuMoments(mom, hu);
@@ -127,6 +121,7 @@ Mat SpeedSign(Mat res, Mat yuv)
 			printf("hu 1번 값 : %lf\n", hu1);
 			printf("hu 2번 값 : %lf\n", hu2);*/
 
+			// Before using below code, you must modified ROI.cols value.
 			if ((hu0 >= 600 && hu0 < 670) && (hu1 >= 150 && hu1 < 200) && (hu2>20 && hu2 < 30))
 			{
 				curOrder[5] = 0;
@@ -148,7 +143,7 @@ Mat SpeedSign(Mat res, Mat yuv)
 			{
 				curOrder[4] = 0;
 				curOrder[6] = 0;
-				if (curStat != limit40 && ROI.cols < 150)
+				if (curStat != limit40 && ROI.cols > 150)
 				{
 					frameCount = framePerSec * showSec;
 					printf("Speed limit 40km/h sign detected\n");
@@ -165,7 +160,7 @@ Mat SpeedSign(Mat res, Mat yuv)
 				curOrder[4] = 0;
 				curOrder[5] = 0;
 
-				if (curStat != limit50 && ROI.cols < 150)
+				if (curStat != limit50 && ROI.cols > 150)
 				{
 					frameCount = framePerSec * showSec;
 					printf("Speed limit 50km/h sign detected\n");

@@ -1,15 +1,17 @@
 #include "raspCar.h"
 
+/*
+* Graduation Project
+* Made by Nipa
+* nipa0711@gmail.com
+* http://www.nipa0711.net/2015/03/OpenCV-Graduation-project-autonomous-car.html
+*/
+
 Mat printInformOnVideo(Mat res)
 {
-	IplImage printImg = res;
+	printImg = res;
 
-	CvFont* font = new CvFont;
-	cvInitFont(font, CV_FONT_VECTOR0, 1.5f, 1.5f, 0, 2);
-
-	//printf("%d\n", frameCount);
-
-	if (frameCount>0 && ROI.cols>130) 
+	if (frameCount > 0 && ROI.cols > 130)
 	{
 		switch (curStat)
 		{
@@ -19,12 +21,9 @@ Mat printInformOnVideo(Mat res)
 			frameCount--;
 			break;
 		case RIGHT:
-			if (ROI.cols>200)
-			{
-				cvPutText(&printImg, "Turn Right", cvPoint(videoWidth / 3, videoHeight - 50), font, CV_RGB(255, 0, 0));
-				res = cvarrToMat(&printImg);
-				frameCount--;
-			}
+			cvPutText(&printImg, "Turn Right", cvPoint(videoWidth / 3, videoHeight - 50), font, CV_RGB(255, 0, 0));
+			res = cvarrToMat(&printImg);
+			frameCount--;
 			break;
 		case UTURN:
 			cvPutText(&printImg, "U-Turn", cvPoint(videoWidth / 3, videoHeight - 50), font, CV_RGB(255, 0, 0));
@@ -52,7 +51,6 @@ Mat printInformOnVideo(Mat res)
 			frameCount--;
 			break;
 		}
-	}	
-	
+	}
 	return res;
 }

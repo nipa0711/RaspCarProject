@@ -1,5 +1,12 @@
 #include "raspCar.h"
 
+/*
+* Graduation Project
+* Made by Nipa
+* nipa0711@gmail.com
+* http://www.nipa0711.net/2015/03/OpenCV-Graduation-project-autonomous-car.html
+*/
+
 Mat DirectionSign(Mat res, Mat yuv)
 {
 	try
@@ -17,9 +24,6 @@ Mat DirectionSign(Mat res, Mat yuv)
 		dilate(channel[1], channel[1], Mat(Size(3, 3), CV_8UC1));
 
 		largest_area = 0;
-		vector<vector<Point> > contours;
-
-		vector<Vec4i> hierarchy;
 
 		channel[1].copyTo(temp2);
 
@@ -44,8 +48,7 @@ Mat DirectionSign(Mat res, Mat yuv)
 		}
 
 
-		Scalar color(255, 255, 255);  // color of the contour in the
-		//Draw the contour and rectangle
+		Scalar color(255, 255, 255);
 		drawContours(show, contours, largest_contour_index, color, CV_FILLED, 8, hierarchy);
 
 		rectangle(res, bounding_rect, Scalar(0, 255, 0), 2, 8, 0);
@@ -85,9 +88,6 @@ Mat DirectionSign(Mat res, Mat yuv)
 
 		drawing = Mat::zeros(ROI.size(), CV_8UC1);
 
-		// From the example you posted, you already know how to compute the contours
-		// so let's take just the first one and compute the moments
-
 		drawContours(drawing, contours, secondLargestIndex, color, CV_FILLED, 8);
 
 		drawing(Rect(0, 0, drawing.cols / 2, drawing.rows)).copyTo(cropedImage);
@@ -95,7 +95,7 @@ Mat DirectionSign(Mat res, Mat yuv)
 
 		if (contours.size() > 0)
 		{
-			Moments mom = moments(contours[0]); //  Error Point
+			Moments mom = moments(contours[0]);
 			HuMoments(mom, hu);
 			hu0 = hu[0] * 1000;
 			hu1 = hu[1] * 1000;
@@ -105,6 +105,7 @@ Mat DirectionSign(Mat res, Mat yuv)
 			printf("hu 1번 값 : %lf\n", hu1);
 			printf("hu 2번 값 : %lf\n", hu2);*/
 
+			// Before using below code, you must modified ROI.cols value.
 			if ((hu0 >= 350 && hu0 < 375) && (hu1 >= 80 && hu1 < 100) && (hu2 >= 1 && hu2 < 5))
 			{
 				curOrder[1] = 0;

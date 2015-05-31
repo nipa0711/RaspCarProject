@@ -3,6 +3,13 @@
 
 #pragma warning(disable:4996)
 
+/*
+* Graduation Project
+* Made by Nipa
+* nipa0711@gmail.com
+* http://www.nipa0711.net/2015/03/OpenCV-Graduation-project-autonomous-car.html
+*/
+
 #include <iostream>
 #include <stdio.h>
 #include <cstring>
@@ -15,6 +22,7 @@
 #include "opencv2/features2d/features2d.hpp"
 #include "opencv2/calib3d/calib3d.hpp"
 #include "opencv2/photo/photo.hpp"
+//#include "raspicam_cv.h" // Run on the Raspberry Pi
 
 using namespace cv;
 using namespace std;
@@ -37,7 +45,6 @@ extern int curOrder[10];
 extern int frameCount;
 extern int videoWidth;
 extern int videoHeight;
-extern int totalVideoPixels;
 extern int ingStat;
 extern int speedSign;
 extern int trafficSign;
@@ -48,10 +55,8 @@ extern int largestContour;
 extern int secondLargestIndex;
 extern int secondLargestContour;
 
-extern const int framePerSec; // fps 초당프레임
-extern const int showSec; // 몇초간 보여줄지
-extern const int LimitColsSize;
-extern const int LimitRowsSize;
+extern const int framePerSec;
+extern const int showSec;
 
 extern Mat show;
 extern Mat cropedImage;
@@ -63,6 +68,8 @@ extern Mat ROI;
 extern Mat showFrontNumber;
 extern Mat yuv;
 extern Mat frontNumber;
+extern Mat temp3[3];
+extern Mat ROI_Black;
 
 extern double hu[7];
 extern double hu0;
@@ -70,5 +77,9 @@ extern double hu1;
 extern double hu2;
 
 extern Rect bounding_rect;
+extern IplImage printImg;
+extern CvFont* font;
+extern vector<vector<Point> > contours;
+extern vector<Vec4i> hierarchy;
 
 #endif

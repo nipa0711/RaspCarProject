@@ -162,6 +162,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="raspCar.h" />
+    <ClInclude Include="raspicam_cv.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="RaspCarProject.rc" />
